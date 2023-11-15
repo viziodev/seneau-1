@@ -1,17 +1,18 @@
-package com.seneau.agentservice.web.dto;
+package com.seneau.agentservice.web.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FonctionDto implements Serializable {
+public class ContratDto {
     private Long id;
     private boolean active = true;
-    private String name;
-    private String code;
+    private Date dateRetraite;
+    private Date dateDebut;
 }

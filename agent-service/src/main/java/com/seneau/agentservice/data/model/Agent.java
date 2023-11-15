@@ -38,10 +38,10 @@ public class Agent extends AbstractEntity{
     private Secteur secteur; // optional
     @ManyToOne
     @JoinColumn(name = "direction", referencedColumnName = "id")
-    private Direction direction; // optional
+    private Direction direction;
     @ManyToOne
     @JoinColumn(name = "etablissement", referencedColumnName = "id")
-    private Etablissement etablissement; // optional
+    private Etablissement etablissement;
     @ManyToOne
     @JoinColumn(name = "equipe", referencedColumnName = "id")
     private Equipe equipe;
@@ -53,6 +53,9 @@ public class Agent extends AbstractEntity{
     private List<Contrat> contrats = new ArrayList<>();
     @OneToMany(mappedBy = "agent")
     private List<Affectation> affectations = new ArrayList<>();
+    @OneToMany(mappedBy = "agent")
+    private List<ApplicationAccess> applicationAccesses = new ArrayList<>();
+
 
 }
 

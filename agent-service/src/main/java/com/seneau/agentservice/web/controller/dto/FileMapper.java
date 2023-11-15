@@ -1,4 +1,4 @@
-package com.seneau.agentservice.web.dto;
+package com.seneau.agentservice.web.controller.dto;
 
 import com.seneau.agentservice.data.model.*;
 import org.springframework.stereotype.Component;

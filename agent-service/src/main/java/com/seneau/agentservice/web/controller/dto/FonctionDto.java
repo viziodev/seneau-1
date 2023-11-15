@@ -1,4 +1,4 @@
-package com.seneau.agentservice.web.dto;
+package com.seneau.agentservice.web.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatutDto implements Serializable {
+public class FonctionDto {
     private Long id;
     private boolean active = true;
     private String name;

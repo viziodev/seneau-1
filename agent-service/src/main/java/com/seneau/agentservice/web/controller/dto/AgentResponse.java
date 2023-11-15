@@ -1,11 +1,6 @@
-package com.seneau.agentservice.web.dto;
+package com.seneau.agentservice.web.controller.dto;
 
-import com.seneau.agentservice.data.model.Application;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +21,6 @@ public class AgentResponse {
     private EtablissementDto etablissement;
     private EquipeDto equipe;
     private ServiceDto service;
-    private List<ContratDto> contrats;
-    private List<Application> applications;
+    // private List<ContratDto> contrats = new ArrayList<>();
+    // private List<ApplicationAccessDto> applicationAccesses = new ArrayList<>();
 }

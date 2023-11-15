@@ -1,4 +1,4 @@
-package com.seneau.agentservice.web.dto;
+package com.seneau.agentservice.web.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AgentDto implements Serializable {
+public class AgentDto {
     private Long id;
     private boolean active = true;
     private Integer matricule;

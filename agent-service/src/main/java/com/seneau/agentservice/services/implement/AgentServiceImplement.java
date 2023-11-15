@@ -5,11 +5,13 @@ import com.seneau.agentservice.data.model.*;
 import com.seneau.agentservice.data.repository.*;
 import com.seneau.agentservice.services.AgentService;
 import com.seneau.agentservice.services.utils.UploadService;
-import com.seneau.agentservice.web.dto.AgentRequest;
-import com.seneau.agentservice.web.dto.AgentResponse;
-import com.seneau.agentservice.web.dto.FileMapper;
+import com.seneau.agentservice.web.controller.dto.AgentRequest;
+import com.seneau.agentservice.web.controller.dto.AgentResponse;
+import com.seneau.agentservice.web.controller.dto.FileMapper;
+import com.seneau.agentservice.web.controller.dto.PageListMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,7 @@ public class AgentServiceImplement implements AgentService {
     private final ObjectMapper objectMapper;
     private final UploadService uploadService;
     private final FileMapper fileMapper;
+    private final PageListMapper pageListMapper;
 
     @Override
     public AgentResponse createAgent(AgentRequest agentRequest) {
@@ -76,13 +79,69 @@ public class AgentServiceImplement implements AgentService {
     }
 
     @Override
-    public Page<Agent> getAllAgent(Pageable pageable) {
-        return agentRepository.findAllByActiveTrue(pageable);
+    public List<AgentResponse> getAllAgentByMatriculeIn(List<Integer> matricules) {
+        return agentRepository.findByMatriculeInAndActiveTrue(matricules)
+                .stream()
+                .map(agent -> objectMapper.convertValue(agent, AgentResponse.class))
+                .toList();
     }
 
     @Override
-    public Agent getAgentByMatriculeAndActiveTrue(Integer matricule) {
-        return agentRepository.findByMatriculeAndActiveTrue(matricule);
+    public List<AgentResponse> getAllAgentByMatriculeChef(Integer matricule) {
+        return agentRepository.findAllByChefMatriculeAndActiveTrue(matricule)
+                .stream()
+                .map(agent -> objectMapper.convertValue(agent, AgentResponse.class))
+                .toList();
+    }
+
+    @Override
+    public List<AgentResponse> getAllAgentByMatriculeDirecteur(Integer matricule) {
+        return agentRepository.findAllByDirecteurMatriculeAndActiveTrue(matricule)
+                .stream()
+                .map(agent -> objectMapper.convertValue(agent, AgentResponse.class))
+                .toList();
+    }
+
+    @Override
+    public List<AgentResponse> getAllAgentByEtablissement(Long etablissementId) {
+        return agentRepository.findAllByEtablissementAndActiveTrue(etablissementId)
+                .stream()
+                .map(agent -> objectMapper.convertValue(agent, AgentResponse.class))
+                .toList();
+    }
+
+    @Override
+    public List<AgentResponse> getAllAgentByDirection(Long directionId) {
+        return agentRepository.findAllByDirectionAndActiveTrue(directionId)
+                .stream()
+                .map(agent -> objectMapper.convertValue(agent, AgentResponse.class))
+                .toList();
+    }
+
+    @Override
+    public Map<String, Object> getAllAgent(int page, int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Agent> agentPage = agentRepository.findAllByActiveTrue(paging);
+        List<AgentResponse> agentResponses = agentPage.getContent().stream().map(agent -> objectMapper.convertValue(agent, AgentResponse.class)).toList();
+        return pageListMapper.getPageToMapObject(
+                agentResponses,
+                agentPage.getNumber(),
+                agentPage.getTotalElements(),
+                agentPage.getTotalPages()
+        );
+    }
+
+    @Override
+    public AgentResponse getAgentByMatriculeAndActiveTrue(Integer matricule) {
+        return objectMapper.convertValue(agentRepository.findByMatriculeAndActiveTrue(matricule), AgentResponse.class);
+    }
+
+    @Override
+    public AgentResponse disableAgent(Integer matricule) {
+        Agent agent = agentRepository.findByMatriculeAndActiveTrue(matricule);
+        if (agent == null) return null;
+        agent.setActive(false);
+        return objectMapper.convertValue(agentRepository.save(agent), AgentResponse.class);
     }
 
     @Override

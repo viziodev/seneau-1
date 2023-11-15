@@ -14,8 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Direction extends AbstractType{
-    @OneToMany(mappedBy = "direction")
-    private List<Service> services = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "chef", referencedColumnName = "id")
     private Agent chef;

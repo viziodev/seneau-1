@@ -14,8 +14,10 @@ import java.util.Date;
 @Getter
 @Setter
 public class Contrat extends AbstractEntity {
+    private Integer matricule;
     private Date dateRetraite;
     private Date dateDebut;
+    private Date dateSortie;
     @ManyToOne
     @JoinColumn(name = "statut", referencedColumnName = "id")
     private Statut statut;

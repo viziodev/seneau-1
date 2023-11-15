@@ -13,6 +13,6 @@ import lombok.Setter;
 @Setter
 public class Service extends AbstractType{
     @ManyToOne
-    @JoinColumn(name = "direction", referencedColumnName = "id")
-    private Direction direction;
+    @JoinColumn(name = "etablissement", referencedColumnName = "id")
+    private Etablissement etablissement;
 }

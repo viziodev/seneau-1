@@ -15,5 +15,7 @@ public class Etablissement extends AbstractType{
     @OneToMany(mappedBy = "etablissement")
     private List<Secteur> secteurs = new ArrayList<>();
     @OneToMany(mappedBy = "etablissement")
+    private List<Service> services = new ArrayList<>();
+    @OneToMany(mappedBy = "etablissement")
     private List<Agent> agents;
 }
