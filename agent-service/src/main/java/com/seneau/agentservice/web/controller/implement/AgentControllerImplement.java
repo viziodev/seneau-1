@@ -1,7 +1,6 @@
 package com.seneau.agentservice.web.controller.implement;
 
 import com.seneau.agentservice.services.AgentService;
-import com.seneau.agentservice.services.utils.UploadService;
 import com.seneau.agentservice.web.controller.AgentController;
 import com.seneau.agentservice.web.dto.AgentRequest;
 import com.seneau.agentservice.web.dto.AgentResponse;
@@ -14,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,7 +21,6 @@ import java.util.Map;
 @RequestMapping("/agent")
 public class AgentControllerImplement implements AgentController {
     private final AgentService agentService;
-    private final UploadService uploadService;
 
     @Override
     public ResponseEntity<AgentResponse> createAgent(AgentRequest agentRequest) {
@@ -35,7 +33,7 @@ public class AgentControllerImplement implements AgentController {
     }
 
     @Override
-    public ResponseEntity<Object> upload(MultipartFile file, Integer numberOfSheet) throws IOException, ParseException {
-        return ResponseEntity.ok(Collections.singletonMap("results", uploadService.getAgentsFromExcelFile(file, numberOfSheet)));
+    public ResponseEntity<List<AgentResponse>> upload(MultipartFile file, Integer numberOfSheet) throws IOException, ParseException {
+        return ResponseEntity.ok(agentService.createAgentFromFileData(file, numberOfSheet));
     }
 }

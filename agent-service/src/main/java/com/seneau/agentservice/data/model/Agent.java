@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @Table(name = "agents")
 public class Agent extends AbstractEntity{
     private Integer matricule;
-    private String CIN;
+    private String cin;
     private String fullName;
     private String situationMatrimoniale;
     private String email;
@@ -49,9 +50,9 @@ public class Agent extends AbstractEntity{
     private Service service; // optional
 
     @OneToMany(mappedBy = "agent")
-    private List<Contrat> contrats;
+    private List<Contrat> contrats = new ArrayList<>();
     @OneToMany(mappedBy = "agent")
-    private List<Affectation> affectations;
+    private List<Affectation> affectations = new ArrayList<>();
 
 }
 

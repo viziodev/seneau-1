@@ -4,11 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,5 +21,5 @@ public class Secteur extends AbstractType{
     @JoinColumn(name = "chef", referencedColumnName = "id")
     private Agent chef;
     @OneToMany(mappedBy = "secteur")
-    private List<Equipe> equipes;
+    private List<Equipe> equipes = new ArrayList<>();
 }

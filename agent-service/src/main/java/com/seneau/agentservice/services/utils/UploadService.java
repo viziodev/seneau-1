@@ -1,7 +1,7 @@
 package com.seneau.agentservice.services.utils;
 
-import com.seneau.agentservice.data.model.Agent;
-import com.seneau.agentservice.data.model.Contrat;
+import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -10,49 +10,56 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class UploadService {
+    private final DataFormatter dataFormatter = new DataFormatter();
 
-    public Date formatDate(String date) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return format.parse(date);
-    }
-
-    public List<Agent> getAgentsFromExcelFile(MultipartFile file, Integer numberOfSheet) throws IOException, ParseException {
-        List<Agent> agents = new ArrayList<>();
+    public List<Map<String, String>> getDataFromExcelFile(MultipartFile file, Integer numberOfSheet) throws IOException {
+        List<Map<String, String>> fileData = new ArrayList<>();
         XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
         if (numberOfSheet == null || numberOfSheet < 0) {
             numberOfSheet = workbook.getNumberOfSheets();
         }
         for (int i = 0; i < numberOfSheet; i++) {
             Sheet sheet = workbook.getSheetAt(i);
-
-            DataFormatter dataFormatter = new DataFormatter();
-            Iterator<Row> rowIterator = sheet.rowIterator();
-            int j = 0;
-            while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
-                if (j != 0) {
-                    Agent agent = new Agent();
-                    agent.setMatricule(Integer.parseInt(dataFormatter.formatCellValue(row.getCell(0))));
-                    agent.setFullName(dataFormatter.formatCellValue(row.getCell(1)) + " " + dataFormatter.formatCellValue(row.getCell(2)));
-                    agent.setSituationMatrimoniale(dataFormatter.formatCellValue(row.getCell(3)));
-                    agent.setDateNaissance(formatDate(dataFormatter.formatCellValue(row.getCell(4))));
-                    Contrat contrat = new Contrat();
-                    contrat.setDateDebut(formatDate(dataFormatter.formatCellValue(row.getCell(5))));
-                    contrat.setDateRetraite(formatDate(dataFormatter.formatCellValue(row.getCell(6))));
-                    agents.add(agent);
-                }
-                j++;
-            }
+            fileData.addAll(getFileData(sheet));
         }
-        return agents;
+        return fileData;
+    }
+
+    private List<String> getFileHeaders(Row row) {
+        Iterator<Cell> cellIterator = row.cellIterator();
+        List<String> keys = new ArrayList<>();
+        while (cellIterator.hasNext()) {
+            Cell cell = cellIterator.next();
+            keys.add(dataFormatter.formatCellValue(cell).trim());
+        }
+        return keys;
+    }
+
+    private List<Map<String, String>> getFileData(Sheet sheet) {
+        List<Map<String, String>> fileData = new ArrayList<>();
+        List<String> keys = new ArrayList<>();
+        Iterator<Row> rowIterator = sheet.rowIterator();
+        int j = 0;
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            if (j == 0) {
+                keys = getFileHeaders(row);
+            } else {
+                if (!keys.isEmpty()) {
+                    Map<String, String> values = new HashMap<>();
+                    for (String key : keys) {
+                        values.put(key, dataFormatter.formatCellValue(row.getCell(keys.indexOf(key))));
+                    }
+                    fileData.add(values);
+                }
+            }
+            j++;
+        }
+        return fileData;
     }
 }

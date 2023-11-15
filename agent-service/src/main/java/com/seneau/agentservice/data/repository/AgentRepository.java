@@ -10,4 +10,5 @@ import java.util.List;
 public interface AgentRepository extends JpaRepository<Agent, Long> {
     List<Agent> findAllByActiveTrue();
     Page<Agent> findAllByActiveTrue(Pageable pageable);
+    Agent findByMatriculeAndActiveTrue(Integer matricule);
 }

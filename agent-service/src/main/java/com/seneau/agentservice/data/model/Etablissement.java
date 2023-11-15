@@ -2,11 +2,10 @@ package com.seneau.agentservice.data.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,5 +13,7 @@ import java.util.List;
 @Setter
 public class Etablissement extends AbstractType{
     @OneToMany(mappedBy = "etablissement")
-    private List<Secteur> secteurs;
+    private List<Secteur> secteurs = new ArrayList<>();
+    @OneToMany(mappedBy = "etablissement")
+    private List<Agent> agents;
 }

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 public interface AgentController {
@@ -21,5 +22,5 @@ public interface AgentController {
     ResponseEntity<Map<String, AgentResponse>> getAllAgent(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size);
 
     @PostMapping("/upload")
-    ResponseEntity<Object> upload(@RequestParam MultipartFile file, @RequestParam Integer numberOfSheet) throws IOException, ParseException;
+    ResponseEntity<List<AgentResponse>> upload(@RequestParam MultipartFile file, @RequestParam Integer numberOfSheet) throws IOException, ParseException;
 }
