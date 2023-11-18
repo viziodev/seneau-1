@@ -7,8 +7,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class RoleDto {
-    private Long id;
+public class RoleRequestDto {
     private String name;
-    private RoleDto rolesHierarchique;
+    private String code;
+    private List<Long> roleHierarchique;
+    private List<Long> roleFonctionnel;
 }

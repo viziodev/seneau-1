@@ -4,6 +4,7 @@ import com.seneau.agentservice.services.AgentService;
 import com.seneau.agentservice.web.controller.AgentController;
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
+import com.seneau.agentservice.web.controller.dto.FilterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,11 @@ public class AgentControllerImplement implements AgentController {
     @Override
     public ResponseEntity<Map<String, Object>> getAllAgent(int page, int size) {
         return ResponseEntity.ok(agentService.getAllAgent(page, size));
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getAllAgentFiltered(FilterDto filterDto) {
+        return ResponseEntity.ok(agentService.getAllAgentByFilterDto(filterDto));
     }
 
     @Override
@@ -72,5 +78,10 @@ public class AgentControllerImplement implements AgentController {
     @Override
     public ResponseEntity<List<AgentResponse>> createAll(MultipartFile file, Integer numberOfSheet) throws IOException, ParseException {
         return ResponseEntity.ok(agentService.createAgentFromFileData(file, numberOfSheet));
+    }
+
+    @Override
+    public ResponseEntity<AgentResponse> updateAgent(Long id, AgentRequest agentRequest) {
+        return ResponseEntity.ok(agentService.updateAgent(id, agentRequest));
     }
 }

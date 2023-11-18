@@ -5,14 +5,15 @@ import com.seneau.agentservice.data.model.*;
 import com.seneau.agentservice.data.repository.*;
 import com.seneau.agentservice.services.AgentService;
 import com.seneau.agentservice.services.utils.UploadService;
-import com.seneau.agentservice.web.controller.dto.AgentRequest;
-import com.seneau.agentservice.web.controller.dto.AgentResponse;
-import com.seneau.agentservice.web.controller.dto.FileMapper;
-import com.seneau.agentservice.web.controller.dto.PageListMapper;
+import com.seneau.agentservice.web.controller.dto.*;
+import com.seneau.agentservice.web.exceptions.BadRequestException;
+import com.seneau.agentservice.web.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -79,6 +80,20 @@ public class AgentServiceImplement implements AgentService {
     }
 
     @Override
+    public Map<String, Object> getAllAgentByFilterDto(FilterDto filterDto) {
+        Pageable paging = PageRequest.of(filterDto.getPage(), filterDto.getPageSize(), Sort.by(filterDto.getSort()));
+        Page<Agent> agentPage = agentRepository.findAllByFilterData(filterDto.getEtablissement(),
+                filterDto.getDirection(), filterDto.getNom(), filterDto.getMatricule(), filterDto.getActive(), paging);
+        List<AgentResponse> agentResponses = agentPage.getContent().stream().map(agent -> objectMapper.convertValue(agent, AgentResponse.class)).toList();
+        return pageListMapper.getPageToMapObject(
+                agentResponses,
+                agentPage.getNumber(),
+                agentPage.getTotalElements(),
+                agentPage.getTotalPages()
+        );
+    }
+
+    @Override
     public List<AgentResponse> getAllAgentByMatriculeIn(List<Integer> matricules) {
         return agentRepository.findByMatriculeInAndActiveTrue(matricules)
                 .stream()
@@ -142,6 +157,21 @@ public class AgentServiceImplement implements AgentService {
         if (agent == null) return null;
         agent.setActive(false);
         return objectMapper.convertValue(agentRepository.save(agent), AgentResponse.class);
+    }
+
+    @Override
+    public Agent getAgentById(Long id) {
+        return agentRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public AgentResponse updateAgent(Long id, AgentRequest agentRequest) {
+        Agent agent = getAgentById(id);
+        if (agent == null) throw new EntityNotFoundException("agent not found with provided id");
+        Agent agent1 = objectMapper.convertValue(agentRequest, Agent.class);
+        BeanUtils.copyProperties(agent1, agent);
+        agentRepository.save(agent);
+        return objectMapper.convertValue(agent, AgentResponse.class);
     }
 
     @Override

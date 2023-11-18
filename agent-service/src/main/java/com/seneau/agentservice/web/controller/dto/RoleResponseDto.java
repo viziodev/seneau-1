@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ApplicationDto {
+public class RoleResponseDto {
     private Long id;
-    private String clientId;
-    private String applicationName;
-    private String description;
+    private String code;
+    private String name;
+    private RoleDto roleHierarchique;
 }

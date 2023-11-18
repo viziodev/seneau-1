@@ -2,6 +2,7 @@ package com.seneau.agentservice.web.controller;
 
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
+import com.seneau.agentservice.web.controller.dto.FilterDto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,12 @@ public interface AgentController {
     ResponseEntity<AgentResponse> createAgent(@Valid @RequestBody AgentRequest agentRequest);
     @PostMapping("/create_all")
     ResponseEntity<List<AgentResponse>> createAll(@RequestParam MultipartFile file, @RequestParam Integer numberOfSheet) throws IOException, ParseException;
+    @PutMapping("/{id}")
+    ResponseEntity<AgentResponse> updateAgent(@PathVariable Long id, @Valid @RequestBody AgentRequest agentRequest);
     @GetMapping
     ResponseEntity<Map<String, Object>> getAllAgent(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size);
+    @PostMapping("/filtered")
+    ResponseEntity<Map<String, Object>> getAllAgentFiltered(@RequestBody FilterDto filterDto);
     @GetMapping("/{matricule}")
     ResponseEntity<AgentResponse> getAgentByMatricule(@PathVariable Integer matricule);
     @PostMapping("/listDtoAgentmatricules/all")

@@ -1,9 +1,14 @@
 package com.seneau.agentservice.web.controller.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
 public class AgentResponse {
     private Integer matricule;
     private String fullName;
@@ -21,6 +26,6 @@ public class AgentResponse {
     private EtablissementDto etablissement;
     private EquipeDto equipe;
     private ServiceDto service;
-    // private List<ContratDto> contrats = new ArrayList<>();
-    // private List<ApplicationAccessDto> applicationAccesses = new ArrayList<>();
+    private List<ContratDto> contrats = new ArrayList<>();
+    private List<ApplicationAccessDto> applicationAccesses = new ArrayList<>();
 }

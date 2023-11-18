@@ -1,5 +1,7 @@
 package com.seneau.agentservice.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +13,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "disc")
 @DiscriminatorValue(value = "AGENT")
@@ -24,6 +29,7 @@ public class Agent extends AbstractEntity{
     private Double taux;
     private String sexe;
     private Date dateNaissance;
+    private Date createdDate = new Date();
     @OneToOne
     private Agent chef;
 
@@ -55,7 +61,9 @@ public class Agent extends AbstractEntity{
     private List<Affectation> affectations = new ArrayList<>();
     @OneToMany(mappedBy = "agent")
     private List<ApplicationAccess> applicationAccesses = new ArrayList<>();
-
+    @OneToOne
+    @JoinColumn(name = "cv")
+    private CV cv;
 
 }
 
