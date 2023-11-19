@@ -1,10 +1,8 @@
 package com.seneau.orchestrator.web.controller;
 
-import com.seneau.communs.activity.agent.dto.AgentResponse;
 import com.seneau.orchestrator.web.domain.BaseController;
 import com.seneau.orchestrator.workflows.ConnectionWorkflow;
 import io.temporal.client.WorkflowClient;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

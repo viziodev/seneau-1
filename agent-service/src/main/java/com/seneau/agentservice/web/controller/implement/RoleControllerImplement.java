@@ -1,6 +1,6 @@
 package com.seneau.agentservice.web.controller.implement;
 
-import com.seneau.agentservice.services.RoleService;
+import com.seneau.agentservice.service.RoleService;
 import com.seneau.agentservice.web.controller.RoleController;
 import com.seneau.agentservice.web.controller.dto.ApplicationAccessDto;
 import com.seneau.agentservice.web.controller.dto.ApplicationAccessRequestDto;

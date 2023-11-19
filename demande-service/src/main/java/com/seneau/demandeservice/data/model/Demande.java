@@ -1,6 +1,7 @@
 package com.seneau.demandeservice.data.model;
 
-import com.seneau.demandeservice.data.enumeration.StatutValidation;
+import com.seneau.demandeservice.data.enumeration.EDemandeCongeStep;
+import com.seneau.demandeservice.data.enumeration.EStatutValidation;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,11 +17,13 @@ import java.util.List;
 @Setter
 public class Demande extends AbstractEntity{
     private Long agent;
-    private StatutValidation statutValidation;
-    private Date date;
+    private Long agentValidation;
+    private EStatutValidation statutValidation;
+    private Date dateDemande;
     @ManyToOne
     @JoinColumn(name = "typeDemande", referencedColumnName = "id")
     private TypeDemande typeDemande;
     @OneToMany(mappedBy = "demande")
     private List<Validation> validations;
+
 }

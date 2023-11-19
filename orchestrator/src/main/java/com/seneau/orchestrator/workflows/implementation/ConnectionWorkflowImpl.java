@@ -2,9 +2,6 @@ package com.seneau.orchestrator.workflows.implementation;
 
 
 import com.seneau.communs.activity.agent.AgentActivity;
-import com.seneau.communs.activity.agent.dto.AgentResponse;
-import com.seneau.communs.activity.agent.dto.ApplicationDto;
-import com.seneau.communs.activity.application.ApplicationActivity;
 import com.seneau.orchestrator.workflows.ConnectionWorkflow;
 import io.temporal.workflow.Workflow;
 

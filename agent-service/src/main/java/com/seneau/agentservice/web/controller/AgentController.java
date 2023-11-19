@@ -16,7 +16,7 @@ import java.util.Map;
 public interface AgentController {
     @PostMapping
     ResponseEntity<AgentResponse> createAgent(@Valid @RequestBody AgentRequest agentRequest);
-    @PostMapping("/create_all")
+    @PostMapping("/create/all")
     ResponseEntity<List<AgentResponse>> createAll(@RequestParam MultipartFile file, @RequestParam Integer numberOfSheet) throws IOException, ParseException;
     @PutMapping("/{id}")
     ResponseEntity<AgentResponse> updateAgent(@PathVariable Long id, @Valid @RequestBody AgentRequest agentRequest);
@@ -38,5 +38,8 @@ public interface AgentController {
     ResponseEntity<List<AgentResponse>> getAgentsByDirection(@PathVariable Long direction);
     @DeleteMapping("/{matricule}/disable")
     ResponseEntity<Object> disableAgent(@PathVariable Integer matricule);
+
+    @GetMapping("/{id}")
+    ResponseEntity<AgentResponse> getAgentById(@PathVariable Long id);
 
 }

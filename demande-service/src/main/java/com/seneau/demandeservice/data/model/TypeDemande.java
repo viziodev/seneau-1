@@ -1,6 +1,6 @@
 package com.seneau.demandeservice.data.model;
 
-import com.seneau.demandeservice.data.enumeration.TypeValidation;
+import com.seneau.demandeservice.data.enumeration.ETypeValidation;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 public class TypeDemande extends AbstractType {
     private Long roleFirstValidation;
     private Long roleLastValidation;
-    private TypeValidation typeValidation;
+    private ETypeValidation ETypeValidation;
     @OneToMany(mappedBy = "typeDemande")
     private List<NiveauValidation> niveauValidations;
 }

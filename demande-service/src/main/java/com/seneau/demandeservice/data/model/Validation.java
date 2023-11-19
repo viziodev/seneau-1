@@ -1,6 +1,6 @@
 package com.seneau.demandeservice.data.model;
 
-import com.seneau.demandeservice.data.enumeration.StatutValidation;
+import com.seneau.demandeservice.data.enumeration.EStatutValidation;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class Validation extends AbstractEntity {
     private Long agent;
-    private StatutValidation statutValidation;
+    private EStatutValidation statutValidation;
     @ManyToOne
     @JoinColumn(name = "demande", referencedColumnName = "id")
     private Demande demande;

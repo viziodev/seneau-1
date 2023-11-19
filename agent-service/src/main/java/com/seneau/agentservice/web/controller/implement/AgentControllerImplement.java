@@ -1,6 +1,6 @@
 package com.seneau.agentservice.web.controller.implement;
 
-import com.seneau.agentservice.services.AgentService;
+import com.seneau.agentservice.service.AgentService;
 import com.seneau.agentservice.web.controller.AgentController;
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
@@ -73,6 +73,11 @@ public class AgentControllerImplement implements AgentController {
     public ResponseEntity<Object> disableAgent(Integer matricule) {
         if (agentService.disableAgent(matricule) == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("response", false));
         return ResponseEntity.ok(Collections.singletonMap("response", true));
+    }
+
+    @Override
+    public ResponseEntity<AgentResponse> getAgentById(Long id) {
+        return ResponseEntity.ok(agentService.getAgentById(id));
     }
 
     @Override

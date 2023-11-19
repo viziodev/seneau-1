@@ -1,7 +1,6 @@
 package com.seneau.orchestrator.workflows;
 
 
-import com.seneau.communs.activity.agent.dto.AgentResponse;
 import io.temporal.workflow.WorkflowInterface;
 import io.temporal.workflow.WorkflowMethod;
 

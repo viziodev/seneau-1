@@ -1,5 +1,6 @@
 package com.seneau.agentservice.web.controller.dto;
 
+import com.seneau.communs.data.dto.role.RoleDto;
 import lombok.Getter;
 import lombok.Setter;
 

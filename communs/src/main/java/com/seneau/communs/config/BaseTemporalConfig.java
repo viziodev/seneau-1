@@ -11,7 +11,6 @@ public class BaseTemporalConfig {
 
     @Value("${temporal.server.host}")
     private String TARGET_ENDPOINT;
-
     @Bean
     public WorkflowServiceStubs workflowServiceStubs() {
         return WorkflowServiceStubs
@@ -20,7 +19,6 @@ public class BaseTemporalConfig {
                         .setTarget(TARGET_ENDPOINT)
                         .build());
     }
-
     @Bean
     public WorkflowClient workflowClient(WorkflowServiceStubs workflowServiceStubs) {
         return WorkflowClient.newInstance(workflowServiceStubs,
