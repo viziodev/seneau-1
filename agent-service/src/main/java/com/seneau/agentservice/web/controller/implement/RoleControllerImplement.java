@@ -6,6 +6,7 @@ import com.seneau.agentservice.web.controller.dto.ApplicationAccessDto;
 import com.seneau.agentservice.web.controller.dto.ApplicationAccessRequestDto;
 import com.seneau.agentservice.web.controller.dto.RoleRequestDto;
 import com.seneau.agentservice.web.controller.dto.RoleResponseDto;
+import com.seneau.communs.data.dto.role.RoleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,11 @@ public class RoleControllerImplement implements RoleController {
     @Override
     public ResponseEntity<RoleResponseDto> createRole(RoleRequestDto roleRequestDto) {
         return null;
+    }
+
+    @Override
+    public ResponseEntity<RoleDto> getRoleById(Long id) {
+        return ResponseEntity.ok(roleService.getRoleById(id));
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.seneau.agentservice.data.model.*;
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
 import com.seneau.agentservice.web.controller.dto.FilterDto;
+import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,7 +25,8 @@ public interface AgentService {
     Map<String, Object> getAllAgent(int page, int size);
     AgentResponse getAgentByMatriculeAndActiveTrue(Integer matricule);
     AgentResponse disableAgent(Integer matricule);
-    AgentResponse getAgentById(Long id);
+    AgentResponseDto getAgentById(Long id);
+    AgentResponseDto getChefByIdAgent(Long id);
     AgentResponse updateAgent(Long id, AgentRequest agentRequest);
     Statut getStatutByNameAndActiveTrue(String name);
     Service getServiceByNameAndActiveTrue(String name);

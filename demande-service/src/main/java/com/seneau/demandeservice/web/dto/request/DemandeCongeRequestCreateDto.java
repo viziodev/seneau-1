@@ -12,4 +12,9 @@ import java.util.Date;
 public class DemandeCongeRequestCreateDto extends DemandeRequestDto {
     private Date dateDemandeDebutConge;
     private int  nbreJourDemande;
+    private int  nbreJourAccorde;
+    private Date dateDebutConge;
+    private Date dateFinConge;
+    private Integer montant;
+    private boolean FraisCongePayed=false;
 }

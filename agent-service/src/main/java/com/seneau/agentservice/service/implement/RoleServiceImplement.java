@@ -15,6 +15,7 @@ import com.seneau.agentservice.web.controller.dto.ApplicationAccessRequestDto;
 import com.seneau.agentservice.web.controller.dto.RoleRequestDto;
 import com.seneau.agentservice.web.controller.dto.RoleResponseDto;
 import com.seneau.agentservice.web.exceptions.EntityNotFoundException;
+import com.seneau.communs.data.dto.role.RoleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class RoleServiceImplement implements RoleService {
 
     @Override
     public ApplicationAccessDto createApplicationAccess(ApplicationAccessRequestDto applicationAccessRequestDto) {
-        Role role = getRoleById(applicationAccessRequestDto.getRole());
+        Role role = objectMapper.convertValue(getRoleById(applicationAccessRequestDto.getRole()), Role.class);
         if (role == null) throw new EntityNotFoundException("role not found with provided id");
         Application application = applicationRepository.findById(applicationAccessRequestDto.getApplication()).orElse(null);
         if (application == null) throw new EntityNotFoundException("application not found with provided id");
@@ -47,7 +48,8 @@ public class RoleServiceImplement implements RoleService {
     }
 
     @Override
-    public Role getRoleById(Long id) {
-        return roleRepository.findById(id).orElse(null);
+    public RoleDto getRoleById(Long id) {
+        Role role = roleRepository.findById(id).orElse(null);
+        return objectMapper.convertValue(role, RoleDto.class);
     }
 }

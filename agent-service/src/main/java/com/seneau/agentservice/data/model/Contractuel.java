@@ -12,4 +12,5 @@ import lombok.Setter;
 @Setter
 @DiscriminatorValue(value = "CONTRACTUEL")
 public class Contractuel extends Agent{
+    private int nombreJourCongeAnnuel;
 }

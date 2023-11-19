@@ -21,6 +21,7 @@ public class DemandeConge  extends Demande {
     private int  nbreJourAccorde;
     private Date dateDebutConge;
     private Date dateFinConge;
+    private Integer montant;
     private boolean FraisCongePayed=false;
 
     public DemandeConge() {

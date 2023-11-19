@@ -7,6 +7,7 @@ import com.seneau.agentservice.service.AgentService;
 
 import com.seneau.agentservice.web.controller.dto.*;
 import com.seneau.agentservice.web.exceptions.EntityNotFoundException;
+import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import com.seneau.communs.service.UploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -162,11 +163,19 @@ public class AgentServiceImplement extends UploadService implements AgentService
     }
 
      @Override
-     public AgentResponse getAgentById(Long id) {
+     public AgentResponseDto getAgentById(Long id) {
         Agent agent = agentRepository.findById(id).orElse(null);
         if (agent == null) return null;
-        return objectMapper.convertValue(agentRepository.findById(id), AgentResponse.class);
+        return objectMapper.convertValue(agentRepository.findById(id), AgentResponseDto.class);
      }
+
+    @Override
+    public AgentResponseDto getChefByIdAgent(Long id) {
+        Agent agent = agentRepository.findById(id).orElse(null);
+        if (agent == null) throw new EntityNotFoundException("agent not found with provided id");
+        if (agent.getChef() == null) throw new EntityNotFoundException("agent not found with provided id");
+        return objectMapper.convertValue(agent.getChef(), AgentResponseDto.class);
+    }
 
     @Override
     public AgentResponse updateAgent(Long id, AgentRequest agentRequest) {

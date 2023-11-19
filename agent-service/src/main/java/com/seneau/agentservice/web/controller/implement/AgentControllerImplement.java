@@ -5,6 +5,7 @@ import com.seneau.agentservice.web.controller.AgentController;
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
 import com.seneau.agentservice.web.controller.dto.FilterDto;
+import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,8 +77,13 @@ public class AgentControllerImplement implements AgentController {
     }
 
     @Override
-    public ResponseEntity<AgentResponse> getAgentById(Long id) {
+    public ResponseEntity<AgentResponseDto> getAgentById(Long id) {
         return ResponseEntity.ok(agentService.getAgentById(id));
+    }
+
+    @Override
+    public ResponseEntity<AgentResponseDto> getChefByIdAgent(Long id) {
+        return ResponseEntity.ok(agentService.getChefByIdAgent(id));
     }
 
     @Override

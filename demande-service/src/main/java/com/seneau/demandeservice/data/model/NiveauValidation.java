@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NiveauValidation extends AbstractEntity {
-    private int ordre;
+    private long ordre;
     private Long role;
     @ManyToOne
     @JoinColumn(name = "typeDemande", referencedColumnName = "id")

@@ -3,6 +3,7 @@ package com.seneau.agentservice.web.controller;
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
 import com.seneau.agentservice.web.controller.dto.FilterDto;
+import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,8 @@ public interface AgentController {
     ResponseEntity<Object> disableAgent(@PathVariable Integer matricule);
 
     @GetMapping("/{id}")
-    ResponseEntity<AgentResponse> getAgentById(@PathVariable Long id);
+    ResponseEntity<AgentResponseDto> getAgentById(@PathVariable Long id);
+    @GetMapping("/chef/{id}")
+    ResponseEntity<AgentResponseDto> getChefByIdAgent(@PathVariable Long id);
 
 }

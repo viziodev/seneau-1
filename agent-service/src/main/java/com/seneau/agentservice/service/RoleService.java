@@ -5,9 +5,10 @@ import com.seneau.agentservice.web.controller.dto.ApplicationAccessDto;
 import com.seneau.agentservice.web.controller.dto.ApplicationAccessRequestDto;
 import com.seneau.agentservice.web.controller.dto.RoleRequestDto;
 import com.seneau.agentservice.web.controller.dto.RoleResponseDto;
+import com.seneau.communs.data.dto.role.RoleDto;
 
 public interface RoleService {
     RoleResponseDto createRole(RoleRequestDto roleRequestDto);
     ApplicationAccessDto createApplicationAccess(ApplicationAccessRequestDto applicationAccessRequestDto);
-    Role getRoleById(Long id);
+    RoleDto getRoleById(Long id);
 }
