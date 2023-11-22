@@ -9,5 +9,5 @@ import lombok.Setter;
 public class ApplicationAccessDto {
     private Long id;
     private ApplicationDto application;
-    private RoleDto role;
+    private RoleAgentDto role;
 }

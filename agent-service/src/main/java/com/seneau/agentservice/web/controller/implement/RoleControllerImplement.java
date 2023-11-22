@@ -2,15 +2,14 @@ package com.seneau.agentservice.web.controller.implement;
 
 import com.seneau.agentservice.service.RoleService;
 import com.seneau.agentservice.web.controller.RoleController;
-import com.seneau.agentservice.web.controller.dto.ApplicationAccessDto;
-import com.seneau.agentservice.web.controller.dto.ApplicationAccessRequestDto;
-import com.seneau.agentservice.web.controller.dto.RoleRequestDto;
-import com.seneau.agentservice.web.controller.dto.RoleResponseDto;
+import com.seneau.agentservice.web.controller.dto.*;
 import com.seneau.communs.data.dto.role.RoleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,12 +18,32 @@ public class RoleControllerImplement implements RoleController {
 
     @Override
     public ResponseEntity<RoleResponseDto> createRole(RoleRequestDto roleRequestDto) {
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(roleService.createRole(roleRequestDto));
     }
 
     @Override
     public ResponseEntity<RoleDto> getRoleById(Long id) {
         return ResponseEntity.ok(roleService.getRoleById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<RoleHierarchiqueDto>> getListRoleHierarchique(Long roleId) {
+        return ResponseEntity.ok(roleService.getListRoleHierarchiqueByRoleId(roleId));
+    }
+
+    @Override
+    public ResponseEntity<RoleHFDto> getListRoleHierarchiqueFonctionnel(Long roleId) {
+        return ResponseEntity.ok(roleService.getListRoleHierarchiqueFonctionnelByRoleId(roleId));
+    }
+
+    @Override
+    public ResponseEntity<List<RoleFonctionnelDto>> getListRoleFonctionnel(Long roleId) {
+        return ResponseEntity.ok(roleService.getListRoleFonctionnelByRoleId(roleId));
+    }
+
+    @Override
+    public ResponseEntity<RoleApplicationAccessDto> getRoleApplicationAccessList(Long roleId) {
+        return ResponseEntity.ok(roleService.getRoleApplicationAccessList(roleId));
     }
 
     @Override
