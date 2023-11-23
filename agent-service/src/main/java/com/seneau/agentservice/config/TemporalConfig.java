@@ -8,9 +8,10 @@ import io.temporal.worker.WorkerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class TemporalConfig extends BaseTemporalConfig {
-    @Bean
+//@Configuration
+public class TemporalConfig {
+        // extends BaseTemporalConfig {
+    /*@Bean
     public WorkerFactory workerFactory(WorkflowClient workflowClient, AgentActivity agentActivity) {
         WorkerFactory workerFactory = WorkerFactory.newInstance(workflowClient);
         // create Worker
@@ -21,5 +22,5 @@ public class TemporalConfig extends BaseTemporalConfig {
         workerFactory.start();
 
         return workerFactory;
-    }
+    }*/
 }

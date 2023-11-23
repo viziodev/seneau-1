@@ -11,14 +11,13 @@ import com.seneau.agentservice.data.repository.ApplicationRepository;
 import com.seneau.agentservice.data.repository.RoleRepository;
 import com.seneau.agentservice.service.RoleService;
 import com.seneau.agentservice.web.controller.dto.*;
-import com.seneau.agentservice.web.exceptions.EntityNotFoundException;
+import com.seneau.communs.web.exceptions.EntityNotFoundException;
 import com.seneau.communs.data.dto.role.RoleDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

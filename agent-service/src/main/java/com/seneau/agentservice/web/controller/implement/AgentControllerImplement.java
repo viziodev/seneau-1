@@ -4,6 +4,7 @@ import com.seneau.agentservice.service.AgentService;
 import com.seneau.agentservice.web.controller.AgentController;
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
+import com.seneau.agentservice.web.controller.dto.CvDto;
 import com.seneau.agentservice.web.controller.dto.FilterDto;
 import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,6 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/agents")
 public class AgentControllerImplement implements AgentController {
     private final AgentService agentService;
 
@@ -84,6 +84,11 @@ public class AgentControllerImplement implements AgentController {
     @Override
     public ResponseEntity<AgentResponseDto> getChefByIdAgent(Long id) {
         return ResponseEntity.ok(agentService.getChefByIdAgent(id));
+    }
+
+    @Override
+    public ResponseEntity<CvDto> createCv(CvDto cvDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(agentService.createCv(cvDto));
     }
 
     @Override

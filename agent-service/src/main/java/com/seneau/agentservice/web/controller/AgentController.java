@@ -2,6 +2,7 @@ package com.seneau.agentservice.web.controller;
 
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
+import com.seneau.agentservice.web.controller.dto.CvDto;
 import com.seneau.agentservice.web.controller.dto.FilterDto;
 import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import jakarta.validation.Valid;
@@ -25,7 +26,7 @@ public interface AgentController {
     ResponseEntity<Map<String, Object>> getAllAgent(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size);
     @PostMapping("/filtered")
     ResponseEntity<Map<String, Object>> getAllAgentFiltered(@RequestBody FilterDto filterDto);
-    @GetMapping("/{matricule}")
+    @GetMapping("/matricule/{matricule}")
     ResponseEntity<AgentResponse> getAgentByMatricule(@PathVariable Integer matricule);
     @PostMapping("/listDtoAgentmatricules/all")
     ResponseEntity<List<AgentResponse>> getAllAgentByMatricules(@RequestBody List<Integer> matricules);
@@ -39,10 +40,11 @@ public interface AgentController {
     ResponseEntity<List<AgentResponse>> getAgentsByDirection(@PathVariable Long direction);
     @DeleteMapping("/{matricule}/disable")
     ResponseEntity<Object> disableAgent(@PathVariable Integer matricule);
-
     @GetMapping("/{id}")
     ResponseEntity<AgentResponseDto> getAgentById(@PathVariable Long id);
     @GetMapping("/chef/{id}")
     ResponseEntity<AgentResponseDto> getChefByIdAgent(@PathVariable Long id);
+    @PostMapping("/cv")
+    ResponseEntity<CvDto> createCv(@RequestBody CvDto cvDto);
 
 }

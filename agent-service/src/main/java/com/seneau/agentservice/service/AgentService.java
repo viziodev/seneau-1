@@ -3,6 +3,7 @@ package com.seneau.agentservice.service;
 import com.seneau.agentservice.data.model.*;
 import com.seneau.agentservice.web.controller.dto.AgentRequest;
 import com.seneau.agentservice.web.controller.dto.AgentResponse;
+import com.seneau.agentservice.web.controller.dto.CvDto;
 import com.seneau.agentservice.web.controller.dto.FilterDto;
 import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,11 +29,5 @@ public interface AgentService {
     AgentResponseDto getAgentById(Long id);
     AgentResponseDto getChefByIdAgent(Long id);
     AgentResponse updateAgent(Long id, AgentRequest agentRequest);
-    Statut getStatutByNameAndActiveTrue(String name);
-    Service getServiceByNameAndActiveTrue(String name);
-    Etablissement getEtablissementByNameAndActiveTrue(String name);
-    Fonction getFonctionByNameAndActiveTrue(String name);
-    Contrat getContratByTyContratNameAndActiveTrue(String name);
-    Direction getDirectionByNameAndActiveTrue(String name);
-    TypeContrat getTypeContratByName(String name);
+    CvDto createCv(CvDto cvDto);
 }

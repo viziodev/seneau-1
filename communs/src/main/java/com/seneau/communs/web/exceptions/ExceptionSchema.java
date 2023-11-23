@@ -1,4 +1,4 @@
-package com.seneau.agentservice.web.exceptions;
+package com.seneau.communs.web.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;

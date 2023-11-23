@@ -26,6 +26,7 @@ public class AgentResponse {
     private EtablissementDto etablissement;
     private EquipeDto equipe;
     private ServiceDto service;
+    private RoleAgentDto role;
     private List<ContratDto> contrats = new ArrayList<>();
     private List<ApplicationAccessDto> applicationAccesses = new ArrayList<>();
 }

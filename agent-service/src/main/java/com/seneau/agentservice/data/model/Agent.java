@@ -64,9 +64,6 @@ public class Agent extends AbstractEntity{
     @OneToOne
     @JoinColumn(name = "cv")
     private CV cv;
-    @OneToOne
-    @JoinColumn(name = "role", referencedColumnName = "id")
-    private Role role;
 
 }
 

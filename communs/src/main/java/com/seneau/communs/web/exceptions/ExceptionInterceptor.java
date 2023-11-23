@@ -1,4 +1,4 @@
-package com.seneau.agentservice.web.exceptions;
+package com.seneau.communs.web.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

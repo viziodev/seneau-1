@@ -6,12 +6,12 @@ import com.seneau.agentservice.data.repository.*;
 import com.seneau.agentservice.service.AgentService;
 
 import com.seneau.agentservice.web.controller.dto.*;
-import com.seneau.agentservice.web.exceptions.EntityNotFoundException;
+import com.seneau.communs.web.exceptions.BadRequestException;
+import com.seneau.communs.web.exceptions.EntityNotFoundException;
 import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import com.seneau.communs.service.UploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,9 +35,11 @@ public class AgentServiceImplement extends UploadService implements AgentService
     private final FonctionRepository fonctionRepository;
     private final EtablissementRepository etablissementRepository;
     private final TypeContratRepository typeContratRepository;
+    private final CvRepository cvRepository;
+    private final ProjetRepository projetRepository;
+    private final CvProjetRepository cvProjetRepository;
+    private final StatutFonctionRepository statutFonctionRepository;
     private final ObjectMapper objectMapper;
-    //TODO How to update get By communs services
-   // private final UploadService uploadService;
     private final FileMapper fileMapper;
     private final PageListMapper pageListMapper;
 
@@ -151,7 +153,14 @@ public class AgentServiceImplement extends UploadService implements AgentService
 
     @Override
     public AgentResponse getAgentByMatriculeAndActiveTrue(Integer matricule) {
-        return objectMapper.convertValue(agentRepository.findByMatriculeAndActiveTrue(matricule), AgentResponse.class);
+        Agent agent = agentRepository.findByMatriculeAndActiveTrue(matricule);
+        if (agent == null) throw new EntityNotFoundException("agent not found with provided matricule");
+        StatutFonction statutFonction = statutFonctionRepository.findByStatutAndFonctionAndActiveTrue(agent.getStatut(), agent.getFonction());
+        AgentResponse agentResponse = objectMapper.convertValue(agent, AgentResponse.class);
+        if (statutFonction != null)
+            agentResponse.setRole(objectMapper.convertValue(statutFonction.getRole(), RoleAgentDto.class));
+
+        return agentResponse;
     }
 
     @Override
@@ -188,37 +197,26 @@ public class AgentServiceImplement extends UploadService implements AgentService
     }
 
     @Override
-    public Statut getStatutByNameAndActiveTrue(String name) {
-        return statutRepository.findByNameAndActiveTrue(name);
+    public CvDto createCv(CvDto cvDto) {
+        if (cvDto == null) throw new BadRequestException("cv required");
+        if (cvDto.getAgent() == null) throw new BadRequestException("agent required");
+        Agent agent = agentRepository.findById(cvDto.getAgent()).orElse(null);
+        if (agent == null) throw new EntityNotFoundException("agent not found with provided id");
+        CV cv = new CV();
+        cv.setAgent(agent);
+        cv = cvRepository.save(cv);
+        List<Projet> projets = cvDto.getProjets().
+                stream()
+                .map(projet -> objectMapper.convertValue(projet, Projet.class))
+                .toList();
+        projets = projetRepository.saveAll(projets);
+        for (Projet projet : projets) {
+            CVProjet cvProjet = new CVProjet();
+            cvProjet.setCv(cv);
+            cvProjet.setProjet(projet);
+            cvProjetRepository.save(cvProjet);
+        }
+        return objectMapper.convertValue(cv, CvDto.class);
     }
 
-    @Override
-    public com.seneau.agentservice.data.model.Service getServiceByNameAndActiveTrue(String name) {
-        return serviceRepository.findByNameAndActiveTrue(name);
-    }
-
-    @Override
-    public Etablissement getEtablissementByNameAndActiveTrue(String name) {
-        return etablissementRepository.findByNameAndActiveTrue(name);
-    }
-
-    @Override
-    public Fonction getFonctionByNameAndActiveTrue(String name) {
-        return fonctionRepository.findByNameAndActiveTrue(name);
-    }
-
-    @Override
-    public Contrat getContratByTyContratNameAndActiveTrue(String name) {
-        return contratRepository.findByTypeContratNameAndActiveTrue(name);
-    }
-
-    @Override
-    public Direction getDirectionByNameAndActiveTrue(String name) {
-        return directionRepository.findByNameAndActiveTrue(name);
-    }
-
-    @Override
-    public TypeContrat getTypeContratByName(String name) {
-        return typeContratRepository.findByNameAndActiveTrue(name);
-    }
 }
