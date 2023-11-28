@@ -60,7 +60,7 @@ public class Agent extends AbstractEntity{
     @OneToMany(mappedBy = "agent")
     private List<Affectation> affectations = new ArrayList<>();
     @OneToMany(mappedBy = "agent")
-    private List<ApplicationAccess> applicationAccesses = new ArrayList<>();
+    private List<ApplicationAccessAgent> applicationAccessAgents = new ArrayList<>();
     @OneToOne
     @JoinColumn(name = "cv")
     private CV cv;

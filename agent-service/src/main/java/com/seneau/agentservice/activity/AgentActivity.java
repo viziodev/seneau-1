@@ -2,7 +2,7 @@ package com.seneau.agentservice.activity;
 
 
 
-import com.seneau.agentservice.web.controller.dto.AgentResponse;
+import com.seneau.agentservice.web.dto.AgentResponse;
 import io.temporal.activity.ActivityInterface;
 import io.temporal.activity.ActivityMethod;
 

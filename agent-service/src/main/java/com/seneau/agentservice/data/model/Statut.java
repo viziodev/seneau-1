@@ -9,5 +9,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Statut extends AbstractType{
+public class Statut extends AbstractType {
+
 }

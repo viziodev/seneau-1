@@ -1,5 +1,6 @@
 package com.seneau.communs.data.dto.agent;
 
+import com.seneau.communs.data.dto.role.PrivilegeResponseDto;
 import com.seneau.communs.data.dto.role.RoleDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,4 +21,5 @@ public class AgentResponseDto {
     private String sexe;
     private Date dateNaissance;
     private RoleDto role;
+    private List<PrivilegeResponseDto> privileges = new ArrayList<>();
 }
