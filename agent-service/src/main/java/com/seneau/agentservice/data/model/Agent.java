@@ -20,6 +20,8 @@ import java.util.List;
 @DiscriminatorColumn(name = "disc")
 @DiscriminatorValue(value = "AGENT")
 @Table(name = "agents")
+//@Cacheable
+//@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Agent extends AbstractEntity{
     private Integer matricule;
     private String cin;

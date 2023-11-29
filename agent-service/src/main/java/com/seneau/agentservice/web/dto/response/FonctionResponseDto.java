@@ -13,4 +13,5 @@ public class FonctionResponseDto {
     private Long id;
     private String name;
     private String code;
+    private boolean active;
 }

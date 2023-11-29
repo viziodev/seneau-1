@@ -1,6 +1,5 @@
 package com.seneau.agentservice.data.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
