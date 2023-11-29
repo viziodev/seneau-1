@@ -1,20 +1,32 @@
 package com.seneau.agentservice.data.model;
 
+import com.seneau.communs.core.GenericEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Fonction extends AbstractType  {
+public class Fonction extends AbstractType implements GenericEntity<Fonction> {
     @OneToMany(mappedBy = "fonction")
     private List<ApplicationAccessFonction> applicationAccessFonctions = new ArrayList<>();
+
+    @Override
+    public void update(Fonction source) {
+        this.setCode(source.getCode());
+        this.setName(source.getName());
+        this.setActive(source.isActive());
+    }
+
+    @Override
+    public Fonction createNewInstance() {
+        Fonction fonction = new Fonction();
+        fonction.update(this);
+        return fonction;
+    }
 }

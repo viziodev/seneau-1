@@ -1,4 +1,4 @@
-package com.seneau.agentservice.web.dto;
+package com.seneau.communs.data.dto;
 
 import org.springframework.stereotype.Component;
 
