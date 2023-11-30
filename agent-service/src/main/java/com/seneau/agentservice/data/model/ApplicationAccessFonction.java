@@ -24,6 +24,6 @@ public class ApplicationAccessFonction extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "fonction", referencedColumnName = "id")
     private Fonction fonction;
-    @OneToMany
-    private List<Privilege> privileges;
+    @OneToMany(mappedBy = "applicationAccessFonction")
+    private List<ApplicationAccessFonctionPrivilege> applicationAccessFonctionPrivileges;
 }

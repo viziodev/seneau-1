@@ -6,6 +6,8 @@ import com.seneau.agentservice.data.repository.*;
 import com.seneau.agentservice.service.agent.AgentService;
 
 import com.seneau.agentservice.web.dto.*;
+import com.seneau.communs.core.UtilService;
+import com.seneau.communs.data.dto.PageListMapper;
 import com.seneau.communs.data.dto.role.PrivilegeResponseDto;
 import com.seneau.communs.web.exceptions.BadRequestException;
 import com.seneau.communs.web.exceptions.EntityNotFoundException;
@@ -28,7 +30,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class AgentServiceImplement extends UploadService implements AgentService {
+public class AgentServiceImplement extends UtilService implements AgentService {
     private final AgentRepository agentRepository;
     private final StatutRepository statutRepository;
     private final ServiceRepository serviceRepository;
@@ -46,7 +48,7 @@ public class AgentServiceImplement extends UploadService implements AgentService
     private final ApplicationAccessFonctionPrivilegeRepository applicationAccessFonctionPrivilegeRepository;
     private final ObjectMapper objectMapper;
     private final FileMapper fileMapper;
-    private final PageListMapper pageListMapper;
+    // private final PageListMapper pageListMapper;
 
     @Override
     public AgentResponse createAgent(AgentRequest agentRequest) {
@@ -95,7 +97,7 @@ public class AgentServiceImplement extends UploadService implements AgentService
         Page<Agent> agentPage = agentRepository.findAllByFilterData(filterDto.getEtablissement(),
                 filterDto.getDirection(), filterDto.getNom(), filterDto.getMatricule(), filterDto.getActive(), paging);
         List<AgentResponse> agentResponses = agentPage.getContent().stream().map(this::agentToAgentResponse).toList();
-        return pageListMapper.getPageToMapObject(
+        return super.getPageToMapObject(
                 agentResponses,
                 agentPage.getNumber(),
                 agentPage.getTotalElements(),
@@ -148,7 +150,7 @@ public class AgentServiceImplement extends UploadService implements AgentService
         Pageable paging = PageRequest.of(page, size);
         Page<Agent> agentPage = agentRepository.findAllByActiveTrue(paging);
         List<AgentResponse> agentResponses = agentPage.getContent().stream().map(this::agentToAgentResponse).toList();
-        return pageListMapper.getPageToMapObject(
+        return super.getPageToMapObject(
                 agentResponses,
                 agentPage.getNumber(),
                 agentPage.getTotalElements(),

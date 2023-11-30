@@ -1,6 +1,6 @@
 package com.seneau.agentservice.web.dto;
 
-import com.seneau.communs.data.dto.role.PrivilegeResponseDto;
+import com.seneau.agentservice.web.dto.response.ApplicationAccessAgentPrivilegesDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,5 +11,5 @@ import java.util.List;
 public class ApplicationAccessDto {
     private Long id;
     private ApplicationDto application;
-    private List<PrivilegeResponseDto> privileges;
+    private List<ApplicationAccessAgentPrivilegesDto> applicationAccessAgentPrivileges;
 }

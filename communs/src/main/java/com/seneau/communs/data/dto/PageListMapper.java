@@ -1,11 +1,11 @@
 package com.seneau.communs.data.dto;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Service
 public class PageListMapper {
     public Map<String, Object> getPageToMapObject(Object o, Object o1, Object o2, Object o3) {
         Map<String, Object> response = new HashMap<>();

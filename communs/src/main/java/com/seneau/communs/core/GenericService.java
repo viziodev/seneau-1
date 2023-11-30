@@ -44,7 +44,7 @@ public abstract class GenericService<T extends GenericEntity<T>, D, R> {
 
     public Map<String, Object> getPage(int page, int pageSize){
         Pageable paging = PageRequest.of(page, pageSize);
-        Page<T> tPage = repository.findAll(paging);
+        Page<T> tPage = repository.findAllByActiveTrue(paging);
         List<D> content = tPage.getContent().stream().map(this::transformEntityToResponseDTO).toList();
         return pageListMapper.getPageToMapObject(
                 content,
@@ -79,6 +79,7 @@ public abstract class GenericService<T extends GenericEntity<T>, D, R> {
         //check if object with this id exists
         get(id);
         repository.deleteById(id);
+        //repository.updateEntity(id);
     }
 
     public T transformRequestDTOToEntity(R element) {
