@@ -1,6 +1,7 @@
 package com.seneau.demandeservice.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seneau.communs.data.dto.PageListMapper;
 import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import com.seneau.communs.data.dto.role.RoleDto;
 import com.seneau.demandeservice.client.AgentRestClient;
@@ -19,7 +20,14 @@ import com.seneau.demandeservice.web.dto.response.DemandeCongeResponseDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -33,6 +41,8 @@ public class DemandeCongeServiceImpl implements DemandeCongeService {
     private RoleRestClient roleRestClient;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private final PageListMapper pageListMapper;
     @Override
     public DemandeCongeResponseDto goToNextStep(Long id, DemandeCongeRequestCreateDto request) {
         DemandeConge demandeConge = demandeCongeRepository.findById(id).orElseThrow();
@@ -65,6 +75,36 @@ public class DemandeCongeServiceImpl implements DemandeCongeService {
         demandeCongeRepository.save(demandeConge);
 
         return null;
+    }
+
+    @Override
+    public Map<String, Object> getAllDemandeCongeByUser(int page, int size,Long agent) {
+        Pageable paging = PageRequest.of(page,size);
+        Page<DemandeConge> pages =demandeCongeRepository.findAllByActiveTrueAndAgent(paging,agent);
+        List<DemandeCongeResponseDto> formatListDto = pages.getContent().stream().map(data->objectMapper.convertValue(data,DemandeCongeResponseDto.class)).toList();
+        return pageListMapper.getPageToMapObject(
+                formatListDto,
+                pages.getNumber(),
+                pages.getTotalElements(),
+                pages.getTotalPages()
+        );
+    }
+
+    @Override
+    public Map<String, Object> getAllDemandeConge(int page, int size) {
+        Pageable paging = PageRequest.of(page,size);
+        Page<DemandeConge> pages =demandeCongeRepository.findAllByActiveTrue(paging);
+        List<DemandeCongeResponseDto> formatListDto = pages.getContent().stream().map(data->objectMapper.convertValue(data,DemandeCongeResponseDto.class)).toList();
+        return pageListMapper.getPageToMapObject(
+                formatListDto,
+                pages.getNumber(),
+                pages.getTotalElements(),
+                pages.getTotalPages()
+        );
+    }
+    @Override
+    public DemandeCongeResponseDto getDemandeCongeById(Long id) {
+        return objectMapper.convertValue(demandeCongeRepository.findById(id),DemandeCongeResponseDto.class) ;
     }
 
     @Override

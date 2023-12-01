@@ -6,6 +6,7 @@ import com.seneau.agentservice.data.repository.*;
 import com.seneau.agentservice.service.agent.AgentService;
 
 import com.seneau.agentservice.web.dto.*;
+import com.seneau.communs.data.dto.PageListMapper;
 import com.seneau.communs.data.dto.role.PrivilegeResponseDto;
 import com.seneau.communs.web.exceptions.BadRequestException;
 import com.seneau.communs.web.exceptions.EntityNotFoundException;
@@ -13,6 +14,7 @@ import com.seneau.communs.data.dto.agent.AgentResponseDto;
 import com.seneau.communs.service.UploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -46,6 +48,7 @@ public class AgentServiceImplement extends UploadService implements AgentService
     private final ApplicationAccessFonctionPrivilegeRepository applicationAccessFonctionPrivilegeRepository;
     private final ObjectMapper objectMapper;
     private final FileMapper fileMapper;
+
     private final PageListMapper pageListMapper;
 
     @Override
